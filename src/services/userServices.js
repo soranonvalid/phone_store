@@ -1,28 +1,26 @@
 import { pool } from "../config/db.js";
 import { ResponseError } from "../errors/responseError.js";
+import { createUserScheme } from "../validations/userValidation.js";
+import validate from "../validations/validate.js";
 
-export const getAllUser = async () => {
-  const [users] = await pool.query(
-    "select id, fullname, username, email, role, address, phone_number, age FROM users"
-  );
+export const getAllProducts = async () => {
+  const [products] = await pool.query("SELECT * FROM products");
 
-  return users;
+  return products;
 };
 
-export const getAllByIdUser = async (id) => {
-  const [users] = await pool.query(
-    "select id, fullname, username, email, role, address, phone_number, age FROM users WHERE id=?",
-    [id]
-  );
+export const getAllByIdProducts = async (id) => {
+  const [users] = await pool.query("SELECT * FROM products WHERE id=?", [id]);
 
   if (users.length == 0) {
-    throw new ResponseError(404, "user not found.");
+    throw new ResponseError(404, "Products not found.");
   }
 
   return users[0];
 };
 
-export const createUser = async (user) => {
+export const createUser = async (request) => {
+  const user = validate(createUserScheme, request);
   try {
     const [result] = await pool.query(
       "INSERT INTO users (fullname, username, email, password, role, address, phone_number, age) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
