@@ -36,6 +36,6 @@ export const createProduct = async (request) => {
       ]
     );
   } catch (error) {
-    throw new ResponseError(500, "failed creating a product");
+    throw new ResponseError(400, "failed creating a product");
   }
 };

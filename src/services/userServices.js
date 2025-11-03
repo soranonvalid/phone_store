@@ -3,14 +3,19 @@ import { ResponseError } from "../errors/responseError.js";
 import { createUserScheme } from "../validations/userValidation.js";
 import validate from "../validations/validate.js";
 
-export const getAllProducts = async () => {
-  const [products] = await pool.query("SELECT * FROM products");
+export const getAllUser = async () => {
+  const [products] = await pool.query(
+    "SELECT id, fullname, username, email, role, address, phone_number, age FROM users"
+  );
 
   return products;
 };
 
-export const getAllByIdProducts = async (id) => {
-  const [users] = await pool.query("SELECT * FROM products WHERE id=?", [id]);
+export const getAllByIdUser = async (id) => {
+  const [users] = await pool.query(
+    "SELECT id, fullname, username, email, role, address, phone_number, age FROM users WHERE id=?",
+    [id]
+  );
 
   if (users.length == 0) {
     throw new ResponseError(404, "Products not found.");
@@ -36,6 +41,6 @@ export const createUser = async (request) => {
       ]
     );
   } catch (error) {
-    throw new ResponseError(500, "failed creating a user");
+    throw new ResponseError(400, "failed creating a user");
   }
 };
