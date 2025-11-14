@@ -1,7 +1,7 @@
 import express from "express";
 import {
-  updateUsersHandler,
   deleteUserByIdHandler,
+  updateUsersHandler,
 } from "../handlers/userHandler.js";
 
 import {

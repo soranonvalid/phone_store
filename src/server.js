@@ -4,11 +4,13 @@ import usersRouter from "./routes/usersRouter.js";
 import productRouter from "./routes/productsRouter.js";
 import cors from "cors";
 import errorMiddleware from "./middlewares/errorMiddlewares.js";
+import authRouter from "./routes/authRouter.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/products", productRouter);
 app.use(errorMiddleware);
